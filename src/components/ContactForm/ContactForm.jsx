@@ -1,9 +1,8 @@
 import css from "./ContactForm.module.css";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { nanoid } from "nanoid";
-import { useDispatch } from "react-redux";
-import { addContact } from "../../redux/contactsSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { addContact } from "../../redux/contactsOps";
 
 //екшен додавання контакту при сабміті
 
@@ -22,11 +21,9 @@ const UserSchema = Yup.object().shape({
 
 export default function ContactForm() {
   const dispatch = useDispatch();
-
-  const contactId = nanoid();
+  const isLoading = useSelector((state) => state.contacts.loading.add);
   const handleSubmit = (values, actions) => {
     const newContact = {
-      id: contactId,
       name: values.name,
       number: values.number,
     };
@@ -45,14 +42,14 @@ export default function ContactForm() {
         validationSchema={UserSchema}
         onSubmit={handleSubmit}
       >
-        <Form className={css.form} id={contactId}>
-          <label htmlFor={contactId}>Name:</label>
-          <Field id={contactId} name="name" />
+        <Form className={css.form}>
+          <label>Name:</label>
+          <Field name="name" />
           <ErrorMessage className={css.error} name="name" component="span" />
-          <label htmlFor={contactId}>Number:</label>
-          <Field id={contactId} type="text" name="number" />
+          <label>Number:</label>
+          <Field type="text" name="number" />
           <ErrorMessage className={css.error} name="number" component="span" />
-          <button className={css.btn} type="submit">
+          <button className={css.btn} type="submit" disabled={isLoading}>
             Add contact
           </button>
         </Form>
