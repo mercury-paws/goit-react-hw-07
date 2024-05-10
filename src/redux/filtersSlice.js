@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createSelector } from "@reduxjs/toolkit";
 
 const slice = createSlice({
   name: "filter",
@@ -11,10 +11,32 @@ const slice = createSlice({
       state.name = action.payload;
     },
     changeNumberFilter: (state, action) => {
-      state.name = action.payload;
+      state.number = action.payload;
     },
   },
 });
 
-export const { changeFilter } = slice.actions;
+export const { changeNameFilter } = slice.actions;
+export const { changeNumberFilter } = slice.actions;
+// export const selectNumberFilter = (state) => state.filters.number;
+const selectContacts = (state) => state.contacts.items;
+export const selectNameFilter = (state) => state.filters.name;
+
+export const selectFilteredContacts = createSelector(
+  [selectContacts, selectNameFilter],
+  (contacts, filter) => {
+    return contacts.filter((contact) =>
+      contact.name.toLowerCase().includes(filter.toLowerCase())
+    );
+  }
+);
+// export const selectFilteredNumberedContacts = createSelector(
+//   [selectContacts, selectNumberFilter],
+//   (contacts, filter) => {
+//     if (!filter) return contacts;
+//     const cleanedFilter = filter.replace(/\D/g, "");
+//     return contacts.filter((contact) => contact.number.includes(cleanedFilter));
+//   }
+// );
+
 export default slice.reducer;

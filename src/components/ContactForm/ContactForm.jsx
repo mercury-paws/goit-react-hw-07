@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { addContact } from "../../redux/contactsOps";
+import { selectLoadingAdd } from "../../redux/contactsSlice";
 
 //екшен додавання контакту при сабміті
 
@@ -21,7 +22,7 @@ const UserSchema = Yup.object().shape({
 
 export default function ContactForm() {
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.contacts.loading.add);
+  const isLoading = useSelector(selectLoadingAdd);
   const handleSubmit = (values, actions) => {
     const newContact = {
       name: values.name,

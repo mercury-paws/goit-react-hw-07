@@ -5,12 +5,14 @@ import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import { fetchContacts } from "../redux/contactsOps.js";
 import Loader from "./Loader/Loader.jsx";
+// import { selectContacts } from "../redux/contactsSlice.js";
+import { selectError, selectLoadingFetch } from "../redux/contactsSlice.js";
 
 export default function App() {
-  const contacts = useSelector((state) => state.contacts.items);
+  // const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
-  const isLoading = useSelector((state) => state.contacts.loading.fetch);
-  const isError = useSelector((state) => state.contacts.error);
+  const isLoading = useSelector(selectLoadingFetch);
+  const isError = useSelector(selectError);
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
@@ -23,7 +25,7 @@ export default function App() {
       <SearchBox />
       {isLoading && <Loader />}
       {isError && <p>Ooops, smth went wrong</p>}
-      <ContactList contacts={contacts} />
+      <ContactList />
     </div>
   );
 }

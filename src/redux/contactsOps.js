@@ -5,7 +5,7 @@ axios.defaults.baseURL = "https://663b7266fee6744a6ea1ac17.mockapi.io";
 
 //Базовий тип екшену це рядок "contacts/fetchAll"
 export const fetchContacts = createAsyncThunk(
-  "contacts/fetchAll",
+  "fetchAll",
   async (_, thunkAPI) => {
     try {
       const response = await axios.get("/contacts");
@@ -18,7 +18,7 @@ export const fetchContacts = createAsyncThunk(
 
 //Базовий тип екшену це рядок "contacts/addContact"
 export const addContact = createAsyncThunk(
-  "contacts/addContact",
+  "addContact",
   async (newContact, thunkAPI) => {
     try {
       const response = await axios.post("/contacts", newContact);
@@ -31,10 +31,10 @@ export const addContact = createAsyncThunk(
 
 //Базовий тип екшену це рядок "contacts/deleteContact"
 export const deleteContact = createAsyncThunk(
-  "contacts/deleteContact",
-  async (taskId, thunkAPI) => {
+  "deleteContact",
+  async (contactId, thunkAPI) => {
     try {
-      const response = await axios.delete(`/contacts/${taskId}`);
+      const response = await axios.delete(`/contacts/${contactId}`);
       return response.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.message);
