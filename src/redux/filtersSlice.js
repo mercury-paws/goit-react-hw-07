@@ -39,4 +39,16 @@ export const selectFilteredContacts = createSelector(
 //   }
 // );
 
+//
+// export const selectFilteredContacts = createSelector(
+//   [selectContacts, selectNameFilter, selectNumberFilter],
+//   (contacts, nameFilter, numberFilter) => {
+//     return contacts.filter((contact) => {
+//       const nameMatch = contact.name.toLowerCase().includes(nameFilter.toLowerCase());
+//       const numberMatch = contact.number.includes(numberFilter.replace(/\D/g, ""));
+//       return nameMatch && numberMatch;
+//     });
+//   }
+// );
+//
 export default slice.reducer;
